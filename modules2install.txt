@@ -1,0 +1,2 @@
+npm install @material-ui/core @material-ut/icons @chec/commerce.js @stripe/react-stripe-js @stripe/stripe-js re
+act-router-dom react-hook-form
