@@ -1,2 +1,270 @@
-npm install @material-ui/core @material-ut/icons @chec/commerce.js @stripe/react-stripe-js @stripe/stripe-js re
-act-router-dom react-hook-form
+Extensiones
+https://marketplace.visualstudio.com/items?itemName=deinsoftware.arrow-function-snippets
+
+
+npm config set legacy-peer-deps true
+
+npm install @material-ui/core @material-ui/icons @chec/commerce.js @stripe/react-stripe-js @stripe/stripe-js react-router-dom react-hook-form
+
+Crear index.js
+imr
+imrd
+
+import App from './App';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+crear App.js
+rafce
+
+Reemplazar App por E-Commerce
+
+
+Crear carpeta src/components
+crear carpeta Products
+crear Products.jsx
+
+imr
+import Grid  from '@material-ui/core'
+
+const Products = () => {
+    <main>
+        <Grid>
+            
+       </Grid>
+    </main>
+    
+}
+
+export default Products;
+
+
+LUEGO
+
+const Products = () => {
+  <main>
+      <Grid container justify="center" spacion={4}>
+          {productos.map((products) => (
+              <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+              <Product />
+              </Grid>    
+        ))}          
+
+    </Grid>
+  </main>;
+};
+
+export default Products;
+
+CREAR CARPETA PRODUCTO
+CREAR COMPONENTE Producto.jsx
+
+rafce
+const Product = () => {
+  return (
+    <div>
+          
+    </div>
+  )
+}
+
+export default Product
+
+
+IMPORTAR
+import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@material-ui/core';
+
+import { AddShoppingCart } from '@material-ui/icons';
+
+
+CAMBIAR LOS divs
+
+const Product = () => {
+  return (
+    <Card>
+          
+    </Card>
+  )
+}
+
+
+LUEGO SE CONSTRUYE LA CARD
+
+const Product = () => {
+  return (
+    <Card className={classes.root}>
+      <CardMedia className={classes.media} image="" title={product.name} />
+      <CardContent>
+        <div className={classes.cardContent}>
+          <Typography variant="h5" gutterBottom>
+            {product.name}
+          </Typography>
+          <Typography variant="h5">
+            {product.price}
+          </Typography>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default Product;
+
+se le agregan los props 
+luego se cambia por product
+
+
+Se agrega la descripción, el boton de agregar al carro y el icono del carrito
+
+const Product = ({ product }) => {
+  return (
+    <Card className={classes.root}>
+      <CardMedia className={classes.media} image="" title={product.name} />
+      <CardContent>
+        <div className={classes.cardContent}>
+          <Typography variant="h5" gutterBottom>
+            {product.name}
+          </Typography>
+
+          <Typography variant="h5">{product.price}</Typography>
+
+          <Typography variant="h2" color="textSecondary">
+            {product.description}
+          </Typography>
+          <CardActions disableSpacing className={classes.cardActions}>
+            <IconButton aria-label="Add to Cart">
+              <AddShoppingCart />
+            </IconButton>
+          </CardActions>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default Product;
+
+
+CREAR EN LA CARPETA PRODUCTO styles.js
+dentro de styles:
+import { makeStyles } from "@material-ui/core/styles";
+
+export default makeStyles(() => {
+    root:{
+        maxWidth: '100%'
+    }
+})
+
+
+LUEGO EN PRODUCTO IMPORTAR EL styles. con un hook useStyles
+
+import useStyles from './styles';
+
+LUEGO ANTES DEL return agregar:
+const classes = useStyles();
+
+
+Product.jsx quedaría así.
+
+import React from "react";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Typography,
+  IconButton,
+} from "@material-ui/core";
+import { AddShoppingCart } from "@material-ui/icons";
+import useStyles from './styles';
+
+const Product = ({ product }) => {
+    const classes = useStyles();
+  return (
+    <Card className={classes.root}>
+      <CardMedia className={classes.media} image="" title={product.name} />
+      <CardContent>
+        <div className={classes.cardContent}>
+          <Typography variant="h5" gutterBottom>
+            {product.name}
+          </Typography>
+
+          <Typography variant="h5">{product.price}</Typography>
+
+          <Typography variant="h2" color="textSecondary">
+            {product.description}
+          </Typography>
+          <CardActions disableSpacing className={classes.cardActions}>
+            <IconButton aria-label="Add to Cart">
+              <AddShoppingCart />
+            </IconButton>
+          </CardActions>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default Product;
+
+
+
+SE AGREGAN MAS MODIFICACIONES A styles.js
+
+import { makeStyles } from "@material-ui/core/styles";
+
+export default makeStyles(() => ({
+    root:{
+        maxWidth: '100%',
+    },
+    media: {
+        height: 0,
+        paddingTop:'56.25%',
+    }
+   
+})
+)
+
+
+AHORA IMPORTAMOS PRODUCTO HACIA productos
+import Product from "../Product/Product";
+
+IMPORTAMOS EL COMPONENTE EN App.js
+
+Al main de Products.jsx hay que meterlo en un return para que devuelva el contenido del componente
+
+import React from "react";
+import { Grid } from "@material-ui/core";
+import Product from "../Product/Product";
+
+const products = [
+    { id: 1, name: "Producto 1", description: "Descripcion P1" , price:'$5'},
+    { id: 2, name: "Producto 2", description: "Descripcion P2", price: '$25' },
+    { id: 3, name: "Producto 3", description: "Descripcion P3" , price: '$35'},
+    
+];
+
+const Products = () => {
+    return (
+        <main>
+        <Grid container justify="center" spacing={4}>
+            {products.map((product) => (
+                <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+                <Product product={product} />
+                </Grid>    
+          ))}          
+  
+      </Grid>
+    </main>
+  )
+};
+
+export default Products;
+
+SE AGREGAun campo image al array de productos. 
+se agregan fotos de productos.
+
+En Producto.jsx  se reeplaza por product.image
+
+en la descripción se puede cambiar h5 por body5, se ve mejor
+
